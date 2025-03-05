@@ -26,3 +26,12 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Compress build artifacts
+      run: |
+        mkdir -p build_artifacts
+        tar -czvf build_artifacts/build.tar.gz -C <your_output_directory> .
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        path: build_artifacts/build.tar.gz
