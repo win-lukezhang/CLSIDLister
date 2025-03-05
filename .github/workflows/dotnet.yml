@@ -23,18 +23,13 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --output ./build_output
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Get output directory
-      id: get-output-dir
-      run: |
-        $outputDir = dotnet build --no-restore --output . | Out-String | Select-String -Pattern 'Output Path: (.*)' | ForEach-Object { $_.Matches[0].Groups[1].Value }
-        echo "output_dir=$outputDir" >> $env:GITHUB_ENV
     - name: Compress build artifacts
       run: |
         mkdir build_artifacts
-        tar -czvf build_artifacts/build.tar.gz -C ${{ env.output_dir }} .
+        tar -czvf build_artifacts/build.tar.gz -C ./build_output .
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
