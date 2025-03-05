@@ -36,7 +36,7 @@ jobs:
         mkdir -p build_artifacts
         tar -czvf build_artifacts/build.tar.gz -C ${{ env.output_dir }} .
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
         path: build_artifacts/build.tar.gz
