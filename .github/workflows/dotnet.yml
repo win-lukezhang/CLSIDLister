@@ -29,11 +29,11 @@ jobs:
     - name: Get output directory
       id: get-output-dir
       run: |
-        output_dir=$(dotnet build --no-restore --output . | grep -oP '(?<=Output Path: ).*')
-        echo "output_dir=$output_dir" >> $GITHUB_ENV
+        $outputDir = dotnet build --no-restore --output . | Select-String -Pattern 'Output Path: (.*)' | ForEach-Object { $_.Matches[0].Groups[1].Value }
+        echo "output_dir=$outputDir" >> $env:GITHUB_ENV
     - name: Compress build artifacts
       run: |
-        mkdir -p build_artifacts
+        mkdir build_artifacts
         tar -czvf build_artifacts/build.tar.gz -C ${{ env.output_dir }} .
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
