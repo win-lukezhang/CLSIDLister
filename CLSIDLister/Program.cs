@@ -134,7 +134,7 @@ namespace CLSIDLister
         public static void ShowHelp()
         {
             Console.WriteLine($"CLSIDLister {Version}");
-            Console.WriteLine($"© {Year} win-lukezhang");
+            Console.WriteLine($"Copyrigyht (c) {Year} win-lukezhang");
             Console.WriteLine("Using GNU GPL v3 License");
             Console.WriteLine("GitHub Repo: https://github.com/win-lukezhang/CLSIDLister");
             Console.WriteLine();
