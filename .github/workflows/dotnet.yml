@@ -26,12 +26,15 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Get output directory
+      id: get-output-dir
+      run: echo "::set-output name=output_dir::$(dotnet build --no-restore --output . | grep -oP '(?<=Output Path: ).*')"
     - name: Compress build artifacts
       run: |
         mkdir -p build_artifacts
-        tar -czvf build_artifacts/build.tar.gz -C <your_output_directory> .
+        tar -czvf build_artifacts/build.tar.gz -C ${{ steps.get-output-dir.outputs.output_dir }} .
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: build-artifacts
         path: build_artifacts/build.tar.gz
