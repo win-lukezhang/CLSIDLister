@@ -29,7 +29,7 @@ jobs:
     - name: Get output directory
       id: get-output-dir
       run: |
-        $outputDir = dotnet build --no-restore --output . | Select-String -Pattern 'Output Path: (.*)' | ForEach-Object { $_.Matches[0].Groups[1].Value }
+        $outputDir = dotnet build --no-restore --output . | Out-String | Select-String -Pattern 'Output Path: (.*)' | ForEach-Object { $_.Matches[0].Groups[1].Value }
         echo "output_dir=$outputDir" >> $env:GITHUB_ENV
     - name: Compress build artifacts
       run: |
